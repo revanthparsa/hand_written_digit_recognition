@@ -20,7 +20,6 @@ Classification report for classifier SVC(gamma=0.001):
            7       0.96      0.99      0.97        89
            8       0.94      1.00      0.97        88
            9       0.93      0.98      0.95        92
-
     accuracy                           0.97       899
    macro avg       0.97      0.97      0.97       899
 weighted avg       0.97      0.97      0.97       899
