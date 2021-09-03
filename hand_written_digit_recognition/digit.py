@@ -59,7 +59,7 @@ for ax, image, label in zip(axes, digits.images, digits.target):
 # flatten the images
 n_samples = len(digits.images)
 data = digits.images.reshape((n_samples, -1))
-
+print("{}".format(n_samples))
 # Create a classifier: a support vector classifier
 clf = svm.SVC(gamma=0.001)
 
