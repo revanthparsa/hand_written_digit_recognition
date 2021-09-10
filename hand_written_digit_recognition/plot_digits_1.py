@@ -4,6 +4,7 @@ from sklearn.metrics import accuracy_score, f1_score
 from sklearn.model_selection import train_test_split
 from skimage import data, color
 from skimage.transform import rescale, resize, downscale_local_mean
+from tabulate import tabulate
 
 digits = datasets.load_digits()
 
@@ -74,3 +75,12 @@ plt.ylabel('accuracy')
 print('.'*50)
 print('Accuracy decreases as the gamma increases')
 print('.'*50)
+
+table = [['S.No','Gamma', 'Accuracy']]
+for i in range(len(gamma_list)):
+  t = []
+  t.append(i+1)
+  t.append(gamma_list[i])
+  t.append(accuracy_gamma[i])
+  table.append(t)
+print(tabulate(table, headers='firstrow', tablefmt='fancy_grid'))
