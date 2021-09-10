@@ -53,3 +53,24 @@ print("8x8 --> 0.7-0.3 --> {}".format(accuracy_score(y_test_2, predicted_2)))
 print("8x8 --> 0.5-0.5 --> {}".format(accuracy_score(y_test_3, predicted_3)))
 
 
+gamma_list = []
+accuracy_gamma = []
+for idx in range(1,20):
+  gamma_list.append(0.001*idx)
+  clf1 = svm.SVC(gamma=0.001*idx)
+  clf1.fit(X_train_1, y_train_1)
+  predicted_1 = clf1.predict(X_test_1)
+  accuracy_gamma.append(accuracy_score(y_test_1, predicted_1))
+
+print('-'*50)
+print('Accuracy of model varying the gamma')
+print('Gamma varies from 0.001 to 0.02 in steps of 0.001')
+print(accuracy_gamma)
+print('-'*50)
+
+plt.plot(gamma_list,accuracy_gamma)
+plt.xlabel('gamma')
+plt.ylabel('accuracy')
+print('-'*50)
+print('Accuracy decreases as the gamma increases')
+print('-'*50)
