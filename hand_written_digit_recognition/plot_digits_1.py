@@ -83,4 +83,4 @@ for i in range(len(gamma_list)):
   t.append(gamma_list[i])
   t.append(accuracy_gamma[i])
   table.append(t)
-print(tabulate(table, headers='firstrow', tablefmt='fancy_grid'))
+print(tabulate(table, headers='firstrow'))
