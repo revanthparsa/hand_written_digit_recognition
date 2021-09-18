@@ -42,7 +42,7 @@ clf7 = svm.SVC(gamma=0.001)
 clf8 = svm.SVC(gamma=0.001)
 clf9 = svm.SVC(gamma=0.001)
 
-# Split data into 50% train and 50% test subsets
+# Split data into train and test subsets
 X_train_1_1, X_test_1_1, y_train_1_1, y_test_1_1 = train_test_split(
     data_1, digits.target, test_size=0.1, shuffle=False)
 X_train_2_1, X_test_2_1, y_train_2_1, y_test_2_1 = train_test_split(
@@ -124,7 +124,7 @@ for i in range(len(gamma_list)):
   t.append(gamma_list[i])
   t.append(accuracy_gamma[i])
   table.append(t)
-print(tabulate(table, headers='firstrow'))
+print(tabulate(table))
 
 max_accuracy = max(accuracy_gamma)
 max_acc_index = accuracy_gamma.index(max_accuracy)
