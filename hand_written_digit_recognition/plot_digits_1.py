@@ -106,7 +106,7 @@ total_len = len(X_train) + len(X_valid) + len(X_test)
 print(f'Percentage of samples in Train dataset: {round((len(X_train)/total_len)*100,2)},\
         Valid dataset: {round((len(X_valid)/total_len)*100,2)},\
         Test dataset: {round((len(X_test)/total_len)*100,2)}')
-
+print('-'*50)
 gamma_list = []
 accuracy_gamma = []
 for index in range(10):
@@ -124,7 +124,7 @@ for i in range(len(gamma_list)):
   t.append(gamma_list[i])
   t.append(accuracy_gamma[i])
   table.append(t)
-print(tabulate(table))
+print(tabulate(table, headers='firstrow'))
 
 max_accuracy = max(accuracy_gamma)
 max_acc_index = accuracy_gamma.index(max_accuracy)
