@@ -106,7 +106,7 @@ total_len = len(X_train) + len(X_valid) + len(X_test)
 print(f'Percentage of samples in Train dataset: {round((len(X_train)/total_len)*100,2)},\
         Valid dataset: {round((len(X_valid)/total_len)*100,2)},\
         Test dataset: {round((len(X_test)/total_len)*100,2)}')
-print('-'*50)
+
 gamma_list = []
 accuracy_gamma = []
 for index in range(10):
