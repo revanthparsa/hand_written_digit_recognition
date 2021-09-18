@@ -26,7 +26,7 @@ Size of the image after resizing: (1797, 16, 16)
 --------------------------------------------------
 Percentage of samples in Train dataset: 79.97,        Valid dataset: 10.02,        Test dataset: 10.02
 
---------------------------------------------------
+
 ----  ------  -------------------
 S.No  Gamma   Validation Accuracy
 1     1e-06   0.14444444444444443
