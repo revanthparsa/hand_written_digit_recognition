@@ -6,6 +6,8 @@ from sklearn.model_selection import train_test_split
 from skimage import data, color
 from skimage.transform import rescale, resize, downscale_local_mean
 from tabulate import tabulate
+import os
+from joblib import load, dump
 
 digits = datasets.load_digits()
 
@@ -15,20 +17,22 @@ n_samples = len(digits.images)
 data_1 = digits.images
 print("Size of the image: {}".format(data_1.shape))
 print()
+data_1 = data_1.reshape((n_samples, -1))
+
+'''
 data_2 = []
 for i in range(data_1.shape[0]):
   data_2.append(resize(data_1[i],(4,4)))
 data_2 = np.array(data_2)
 print("Size of the image  after resizing: {}".format(data_2.shape))
 print()
+data_2 = data_2.reshape((n_samples, -1))
 data_3 = []
 for i in range(data_1.shape[0]):
   data_3.append(resize(data_1[i],(16,16)))
 data_3 = np.array(data_3)
 print("Size of the image after resizing: {}".format(data_3.shape))
 print('-'*50)
-data_1 = data_1.reshape((n_samples, -1))
-data_2 = data_2.reshape((n_samples, -1))
 data_3 = data_3.reshape((n_samples, -1))
 
 # Create a classifier: a support vector classifier
@@ -95,7 +99,9 @@ print("16x16 --> 0.9-0.1 --> {}".format(accuracy_score(y_test_1_3, predicted_1_3
 print("16x16 --> 0.7-0.3 --> {}".format(accuracy_score(y_test_2_3, predicted_2_3)))
 print("16x16 --> 0.5-0.5 --> {}".format(accuracy_score(y_test_3_3, predicted_3_3)))
 print('-'*50)
+'''
 
+os.mkdir('models')
 #For finding the best gamma value
 X_train, X_test, y_train, y_test = train_test_split(
     data_1, digits.target, test_size=0.2, shuffle=False)
@@ -109,14 +115,30 @@ print(f'Percentage of samples in Train dataset: {round((len(X_train)/total_len)*
 print('-'*50)
 gamma_list = []
 accuracy_gamma = []
+model_candidates = []
 for index in range(10):
     gamma_idx = 10**(-6+index)
     gamma_list.append(gamma_idx)
     clf = svm.SVC(gamma = gamma_idx)
     clf.fit(X_train, y_train)
     predicted_valid = clf.predict(X_valid)
-    accuracy_gamma.append(accuracy_score(predicted_valid, y_valid))
+    acc_valid =accuracy_score(predicted_valid, y_valid)
+    accuracy_gamma.append(acc_valid)
+    if acc_valid < 0.11:
+        print("Skipping for gamma {}".format(gamma_idx))
+        continue
+    candidate = {
+        "acc_valid" : acc_valid,
+        "gamma" : gamma_idx
+    }
+    model_candidates.append(candidate)
+    output_folder = "./models/test_{}_val_{}_rescale_{}_gamma_{}".format(
+        round((len(X_test)/total_len)*100,2), round((len(X_valid)/total_len)*100,2),
+        8, gamma_idx)
+    os.mkdir(output_folder) 
+    dump(clf, os.path.join(output_folder,"model.joblib"))
 
+'''
 table = [['S.No','Gamma', 'Validation Accuracy']]
 for i in range(len(gamma_list)):
   t = []
@@ -130,9 +152,15 @@ max_accuracy = max(accuracy_gamma)
 max_acc_index = accuracy_gamma.index(max_accuracy)
 clf = svm.SVC(gamma = gamma_list[max_acc_index])
 clf.fit(X_train, y_train)
+'''
+max_acc_valid = max(model_candidates,key = lambda x:x["acc_valid"])
+best_model_folder =  "./models/test_{}_val_{}_rescale_{}_gamma_{}".format(
+        round((len(X_test)/total_len)*100,2), round((len(X_valid)/total_len)*100,2),
+        8, max_acc_valid['gamma'])
+clf = load(os.path.join(best_model_folder,"model.joblib"))
 predicted_test = clf.predict(X_test)
 test_accuracy = (accuracy_score(predicted_test, y_test))
 
 print('-'*50)
-print(f'Best gamma is {gamma_list[max_acc_index]}, Test accuracy on best gamma is {test_accuracy}')
+print('Best gamma is {}, Test accuracy on best gamma is {}'.format(max_acc_valid['gamma'], test_accuracy))
 print('-'*50)
