@@ -18,6 +18,7 @@ Skipping for gamma 10
 Skipping for gamma 100
 
 Skipping for gamma 1000
+
 --------------------------------------------------
 Best gamma is 0.001, Test accuracy 0.9925925925925926, F1-Score is 0.9926484660849987
 --------------------------------------------------
