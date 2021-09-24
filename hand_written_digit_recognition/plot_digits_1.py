@@ -8,8 +8,14 @@ from utils import preprocess, create_splits, test
 
 digits = datasets.load_digits()
 rescale_factors = [8]
-if not(os.path.exist("./models")):
+
+if not (os.path.exists("./models")):
     os.mkdir('models')
+    #print("NO")
+else:
+    #print("YES")
+    pass
+
 lst_train_valid = [(0.15, 0.15)]
 
 model_candidates = []
@@ -37,7 +43,13 @@ for test_size, valid_size in lst_train_valid:
             model_candidates.append(candidate)
             output_folder = "./models/test_{}_val_{}_rescale_{}_gamma_{}".format(
                 test_size, valid_size, rescale_factor, gamma_idx)
-            os.mkdir(output_folder) 
+            if not (os.path.exists(output_folder)):
+                os.mkdir(output_folder)
+                #print("NO")
+            else:
+                #print("YES")
+                pass
+             
             dump(clf, os.path.join(output_folder,"model.joblib"))
             print('gamma: {}, {}x{} ==> {} ==> {}'.format(gamma_idx,
                 rescale_factor, rescale_factor, metric_dic['acc'], metric_dic['f1']))
