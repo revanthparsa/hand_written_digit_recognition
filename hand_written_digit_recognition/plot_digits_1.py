@@ -8,7 +8,8 @@ from utils import preprocess, create_splits, test
 
 digits = datasets.load_digits()
 rescale_factors = [8]
-os.mkdir('models')
+if not(os.path.exist("./models")):
+    os.mkdir('models')
 lst_train_valid = [(0.15, 0.15)]
 
 model_candidates = []
