@@ -26,7 +26,7 @@ def test(X_valid, y_valid, clf):
     return {'acc':acc_valid,'f1':f1_valid}
 
 def run_classification_experiment(classifier, X_train, X_valid, X_test, y_train, y_valid, y_test, gamma_idx, output_folder):
-    clf = svm.SVC(gamma=gamma_idx)
+    clf = classifier(gamma=gamma_idx)
     clf.fit(X_train, y_train)
     metric_dic = test(X_valid, y_valid, clf)
     if metric_dic['acc'] < 0.11:
