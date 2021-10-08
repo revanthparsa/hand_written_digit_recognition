@@ -27,8 +27,8 @@ def test_model_writing():
     ##2. run_classification_experiment(data, expeted-model-file)
     run_classification_experiment(svm.SVC, X_train, X_valid, 
                         X_test, y_train, y_valid, y_test, gamma_idx, output_folder)
-    
-    assert os.path.isdir(output_folder)
+    final_folder = output_folder + '/model.joblib'
+    assert os.path.isfile(final_folder)
 
 
 def test_small_data_overfit_checking():
