@@ -56,3 +56,39 @@ def test_small_data_overfit_checking():
     assert train_metrics['acc']  > 0.99
     #assert train_metrics['f1'] > some other threshold
     assert train_metrics['f1'] > 0.99
+
+def test_create_splits():
+    digits = datasets.load_digits()
+    n_samples = 100
+    num_train = 70
+    num_test = 20
+    num_valid = 10
+    test_size = 0.10
+    valid_size = 0.199
+    digits.images = digits.images[:n_samples]
+    digits.target = digits.target[:n_samples]
+    image_resized = np.array(digits.images)
+    image_resized = image_resized.reshape((len(digits.images), -1))
+    X_train, X_valid, X_test, y_train, y_valid, y_test = create_splits(
+        image_resized, digits.target, test_size, valid_size)
+    assert len(X_train) == num_train
+    assert len(X_test) == num_test
+    assert len(X_valid) == num_valid
+    assert len(X_train)+len(X_valid)+ len(X_test) == n_samples   
+
+    n_samples = 9
+    num_train = 6
+    num_test = 2
+    num_valid = 1
+    test_size = 0.1
+    valid_size = 0.2
+    digits.images = digits.images[:n_samples]
+    digits.target = digits.target[:n_samples]
+    image_resized = np.array(digits.images)
+    image_resized = image_resized.reshape((len(digits.images), -1))
+    X_train, X_valid, X_test, y_train, y_valid, y_test = create_splits(
+        image_resized, digits.target, test_size, valid_size)
+    assert len(X_train) == num_train
+    assert len(X_test) == num_test
+    assert len(X_valid) == num_valid
+    assert len(X_train)+len(X_valid)+ len(X_test) == n_samples  
