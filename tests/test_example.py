@@ -1,5 +1,5 @@
 import math
-from sklearn import datasets, svm, metrics
+from sklearn import datasets, svm, metrics, tree
 import os
 from joblib import load, dump
 import numpy as np
