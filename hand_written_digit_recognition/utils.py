@@ -1,4 +1,4 @@
-from sklearn import datasets, svm, metrics
+from sklearn import datasets, svm, metrics, tree
 from sklearn.metrics import accuracy_score, f1_score
 from sklearn.model_selection import train_test_split
 from skimage import data, color
@@ -26,18 +26,32 @@ def test(X_valid, y_valid, clf):
     return {'acc':acc_valid,'f1':f1_valid}
 
 def run_classification_experiment(classifier, X_train, X_valid, X_test, y_train, y_valid, y_test, gamma_idx, output_folder):
-    clf = classifier(gamma=gamma_idx)
-    clf.fit(X_train, y_train)
-    metric_dic = test(X_valid, y_valid, clf)
-    if metric_dic['acc'] < 0.11:
-        print("Skipping for gamma {}".format(gamma_idx))
-        return None
-    if not (os.path.exists(output_folder)):
-        os.mkdir(output_folder)
-        #print("NO")
-    else:
-        #print("YES")
-        pass
-     
-    dump(clf, os.path.join(output_folder,"model.joblib"))
-    return metric_dic
+    if classifier == svm.SVC:
+        clf = classifier(gamma=gamma_idx)
+        clf.fit(X_train, y_train)
+        metric_dic = test(X_valid, y_valid, clf)
+        if metric_dic['acc'] < 0.11:
+            print("Skipping for gamma {}".format(gamma_idx))
+            return None
+        if not (os.path.exists(output_folder)):
+            os.mkdir(output_folder)
+            #print("NO")
+        else:
+            #print("YES")
+            pass
+         
+        dump(clf, os.path.join(output_folder,"model.joblib"))
+        return metric_dic
+    elif classifier == tree.DecisionTreeClassifier:
+        clf = classifier(max_depth=gamma_idx)
+        clf.fit(X_train, y_train)
+        metric_dic = test(X_valid, y_valid, clf)
+        if not (os.path.exists(output_folder)):
+            os.mkdir(output_folder)
+            #print("NO")
+        else:
+            #print("YES")
+            pass
+         
+        dump(clf, os.path.join(output_folder,"model.joblib"))
+        return metric_dic
