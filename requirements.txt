@@ -3,3 +3,4 @@ sklearn==0.0
 scikit_image==0.17.2
 tabulate==0.8.9
 pytest==6.2.5
+numpy==1.19.5
