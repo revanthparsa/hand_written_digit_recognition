@@ -8,3 +8,9 @@ Iteration  Best Depth  Best Gamma  DTC Accuracy            DTC F1 Score         
                                    0.8311111111111111 +/-  0.8294601314170574 +/-  0.9925925925925926 +/-  0.9926484660849987 +/-
                                    0.006017806225656297    0.007095472509192519    0.0                     0.0
 ---------  ----------  ----------  ----------------------  ----------------------  ----------------------  ----------------------
+
+
+-------------------------------------------------------
+SVM with gamma 0.001 is better comapred to deciaion classifier because the accuracy is same for all the iterations and decision
+classifier accuracy varies and acuracy/f1-score less than that of SVM
+------------------------------------------------------- 
