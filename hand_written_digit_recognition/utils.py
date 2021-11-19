@@ -30,9 +30,6 @@ def run_classification_experiment(classifier, X_train, X_valid, X_test, y_train,
         clf = classifier(gamma=gamma_idx)
         clf.fit(X_train, y_train)
         metric_dic = test(X_valid, y_valid, clf)
-        if metric_dic['acc'] < 0.11:
-            print("Skipping for gamma {}".format(gamma_idx))
-            return None
         if not (os.path.exists(output_folder)):
             os.mkdir(output_folder)
             #print("NO")
