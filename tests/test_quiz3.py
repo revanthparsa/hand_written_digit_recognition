@@ -4,7 +4,7 @@ import os
 from joblib import load, dump
 import numpy as np
 import sys  
-sys.path.append('/home/revanth/hand_written_digit_recognition/hand_written_digit_recognition') 
+sys.path.append('./hand_written_digit_recognition/hand_written_digit_recognition') 
 from utils import preprocess, create_splits, run_classification_experiment
 
 best_model_path_svm = "/home/revanth/hand_written_digit_recognition/hand_written_digit_recognition/models/test_0.15_val_0.15_rescale_8_gamma_0.001/model.joblib"
