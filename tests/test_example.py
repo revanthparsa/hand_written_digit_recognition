@@ -62,7 +62,7 @@ def test_small_data_overfit_checking():
 def test_create_splits():
     digits = datasets.load_digits()
     n_samples = 100
-    num_train = 7z0
+    num_train = 70
     num_test = 20
     num_valid = 10
     test_size = 0.10
