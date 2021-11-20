@@ -4,7 +4,7 @@ import os
 from joblib import load, dump
 import numpy as np
 import sys  
-sys.path.append('/home/r/hand_written_digit_recognition/hand_written_digit_recognition') 
+sys.path.append('/home/revanth/hand_written_digit_recognition/hand_written_digit_recognition') 
 from utils import preprocess, create_splits, run_classification_experiment
 
 '''
