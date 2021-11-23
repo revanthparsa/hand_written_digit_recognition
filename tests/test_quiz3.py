@@ -4,21 +4,16 @@ import os
 from joblib import load, dump
 import numpy as np
 import sys  
-path = os.getcwd()
-#print(path)
-path_2 = path[:-5] + 'hand_written_digit_recognition/'
-os.chdir(path_2)
-#print(os.getcwd())
-#sys.path.append('./hand_written_digit_recognition/hand_written_digit_recognition') 
+sys.path.append('./hand_written_digit_recognition/hand_written_digit_recognition') 
 from utils import preprocess, create_splits, run_classification_experiment
 
-best_model_path_svm = "./models/test_0.15_val_0.15_rescale_8_gamma_0.001/model.joblib"
+best_model_path_svm = "/home/revanth/hand_written_digit_recognition/hand_written_digit_recognition/models/test_0.15_val_0.15_rescale_8_gamma_0.001/model.joblib"
 clf_svm = load(best_model_path_svm)
 digits = datasets.load_digits()
 image_resized = preprocess(digits.images, 8)
 image_resized = np.array(image_resized)
 image_resized = image_resized.reshape((len(digits.images), -1))
-best_model_path_dc = "./models/test_0.15_val_0.15_rescale_8_maxdepth_14/model.joblib"
+best_model_path_dc = "/home/revanth/hand_written_digit_recognition/hand_written_digit_recognition/models/test_0.15_val_0.15_rescale_8_maxdepth_14/model.joblib"
 clf_dc = load(best_model_path_dc)
 
 ###### for Class 0 ######
