@@ -1,0 +1,9 @@
+FROM ubuntu:18.04
+COPY hand_written_digit_recognition /exp/hand_written_digit_recognition
+COPY api /exp/api
+COPY requirements.txt /exp/requirements.txt
+RUN apt-get update && apt-get install -y python3 python3-pip
+RUN pip3 install --no-cache-dir -r /exp/requirements.txt
+RUN mkdir /exp/models
+WORKDIR /exp
+CMD ["python3", "./api/hello.py"]
