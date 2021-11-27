@@ -19,36 +19,25 @@ def create_splits(images, targets, test_size, valid_size):
         X_test, y_test, test_size=valid_size/(test_size + valid_size), shuffle=False)
     return X_train, X_valid, X_test, y_train, y_valid, y_test    
 
-def test(X_valid, y_valid, clf):
+def test(X_valid, y_valid, X_train, y_train, clf):
     predicted_valid = clf.predict(X_valid)
     acc_valid = accuracy_score(predicted_valid, y_valid)
     f1_valid = f1_score(predicted_valid, y_valid , average="macro")
-    return {'acc':acc_valid,'f1':f1_valid}
+    predicted_train = clf.predict(X_train)
+    acc_train = accuracy_score(predicted_train, y_train)
+    f1_train = f1_score(predicted_train, y_train , average="macro")
+    return {'acc_valid':acc_valid,'f1_valid':f1_valid, 'acc_train':acc_train,'f1_train':f1_train}
 
 def run_classification_experiment(classifier, X_train, X_valid, X_test, y_train, y_valid, y_test, gamma_idx, output_folder):
-    if classifier == svm.SVC:
-        clf = classifier(gamma=gamma_idx)
-        clf.fit(X_train, y_train)
-        metric_dic = test(X_valid, y_valid, clf)
-        if not (os.path.exists(output_folder)):
-            os.mkdir(output_folder)
-            #print("NO")
-        else:
-            #print("YES")
-            pass
-         
-        dump(clf, os.path.join(output_folder,"model.joblib"))
-        return metric_dic
-    elif classifier == tree.DecisionTreeClassifier:
-        clf = classifier(max_depth=gamma_idx)
-        clf.fit(X_train, y_train)
-        metric_dic = test(X_valid, y_valid, clf)
-        if not (os.path.exists(output_folder)):
-            os.mkdir(output_folder)
-            #print("NO")
-        else:
-            #print("YES")
-            pass
-         
-        dump(clf, os.path.join(output_folder,"model.joblib"))
-        return metric_dic
+    clf = classifier(max_depth=gamma_idx)
+    clf.fit(X_train, y_train)
+    metric_dic = test(X_valid, y_valid, X_train, y_train, clf)
+    if not (os.path.exists(output_folder)):
+        os.mkdir(output_folder)
+        #print("NO")
+    else:
+        #print("YES")
+        pass
+     
+    dump(clf, os.path.join(output_folder,"model.joblib"))
+    return metric_dic
