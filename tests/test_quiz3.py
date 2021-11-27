@@ -4,8 +4,14 @@ import os
 from joblib import load, dump
 import numpy as np
 import sys  
+from skimage.transform import rescale, resize, downscale_local_mean
 sys.path.append('./hand_written_digit_recognition/hand_written_digit_recognition') 
-from utils import preprocess, create_splits, run_classification_experiment
+#from utils import preprocess, create_splits, run_classification_experiment
+def preprocess(images, rescale_factor):
+    image_resized = []
+    for i in range(images.shape[0]):
+        image_resized.append(resize(images[i],(rescale_factor,rescale_factor)))
+    return image_resized
 
 best_model_path_svm = "/home/revanth/hand_written_digit_recognition/hand_written_digit_recognition/models/test_0.15_val_0.15_rescale_8_gamma_0.001/model.joblib"
 clf_svm = load(best_model_path_svm)

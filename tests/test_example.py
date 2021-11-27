@@ -5,8 +5,14 @@ from joblib import load, dump
 import numpy as np
 import sys  
 sys.path.append('/home/revanth/hand_written_digit_recognition/hand_written_digit_recognition') 
-from utils import preprocess, create_splits, run_classification_experiment
-
+#from utils import preprocess, create_splits, run_classification_experiment
+from sklearn.model_selection import train_test_split
+def create_splits(images, targets, test_size, valid_size):
+    X_train, X_test, y_train, y_test = train_test_split(
+        images, targets, test_size=test_size + valid_size, shuffle=False)
+    X_valid, X_test, y_valid, y_test = train_test_split(
+        X_test, y_test, test_size=valid_size/(test_size + valid_size), shuffle=False)
+    return X_train, X_valid, X_test, y_train, y_valid, y_test
 '''
 def test_model_writing():
 
